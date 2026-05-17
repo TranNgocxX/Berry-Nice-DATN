@@ -64,8 +64,8 @@
                 @foreach($appointments as $appointment)
                 <tr class="hover:bg-slate-50 transition">
                     <td class="px-6 py-5">
-                        <div class="font-medium">{{ $appointment->detail->customer_name }}</div>
-                        <div class="text-sm text-slate-500">{{ $appointment->detail->phone }}</div>
+                        <div class="font-medium">{{ $appointment->appointmentDetail->customer_name }}</div>
+                        <div class="text-sm text-slate-500">{{ $appointment->appointmentDetail->phone }}</div>
                     </td>
                     <td class="px-6 py-5 font-medium text-slate-800">{{ $appointment->service->name }}</td>
                     <td class="px-6 py-5 text-center text-sm">{{ $appointment->start_time }}</td>

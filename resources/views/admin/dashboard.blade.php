@@ -88,10 +88,11 @@
                     <tbody class="divide-y divide-gray-50">
                         @forelse($appointments as $a)
                             <tr class="hover:bg-pink-50/30 transition-colors group">
-                                <td class="px-6 py-4 font-semibold text-gray-700">{{ $a->detail->customer_name ?? 'Khách lẻ' }}</td>
+                                <td class="px-6 py-4 font-semibold text-gray-700">{{ $a->appointmentDetail->customer_name ?? 'Khách lẻ' }}</td>
                                 <td class="px-6 py-4 text-gray-600">{{ $a->service->name ?? '-' }}</td>
                                 <td class="px-6 py-4 text-sm text-gray-500">
-                                    {{ \Carbon\Carbon::parse($a->start_time)->format('H:i d/m') }}
+                                    {{-- {{ \Carbon\Carbon::parse($a->start_time)->format('H:i d/m') }} --}}
+                                    {{ $a->start_time->format('H:i d/m') }}
                                 </td>
                                 <td class="px-6 py-4">
                                     <span class="badge-status {{ $a->status }}">
@@ -111,7 +112,7 @@
                 </table>
             </div>
 
-            <!-- Pagination Optimized -->
+            <!-- Pagination -->
             <div class="px-6 py-4 bg-gray-50/30 border-t border-gray-50 flex items-center justify-between">
                 <div class="text-xs font-medium text-gray-400 uppercase">
                     Trang {{ $appointments->currentPage() }} / {{ $appointments->lastPage() }}

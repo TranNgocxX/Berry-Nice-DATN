@@ -19,7 +19,11 @@ class StoreAppointmentRequest extends FormRequest
             'start_time' => 'required|date|after_or_equal:now',
             'customer_name' => 'required|string|max:255',
             'phone' => 'required|regex:/^0[0-9]{9}$/',
-            'payment_method' => 'required|in:cash,qr'
+            'email' => 'nullable|email|max:255',
+            'address' => 'nullable|string|max:255',
+            'payment_method' => 'required|in:cash,qr',
+            'health_status' => ['nullable', 'string'],
+            'notes' => ['nullable', 'string'],
         ];
     }
 

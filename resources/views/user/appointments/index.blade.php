@@ -28,7 +28,7 @@
                     </svg>
                 </span>
                 <input type="text" name="keyword" value="{{ request('keyword') }}" 
-                    placeholder="Tìm dịch vụ, nhân viên..." 
+                    placeholder="Tìm dịch vụ" 
                     class="w-full pl-11 pr-4 py-2.5 bg-slate-100 rounded-2xl text-sm text-slate-600 
                             focus:ring-2 focus:ring-[#6B8F71] outline-none transition">
             </div>
@@ -86,8 +86,8 @@
                             <div class="font-bold text-slate-800">{{ $appointment->service->name }}</div>
                         </td>
                         <td class="px-8 py-6">
-                            <div class="text-slate-700 font-medium">{{ \Carbon\Carbon::parse($appointment->start_time)->format('d/m/Y') }}</div>
-                            <div class="text-[#6B8F71] text-sm font-semibold">{{ \Carbon\Carbon::parse($appointment->start_time)->format('H:i') }}</div>
+                            <div class="text-slate-700 font-medium">{{ $appointment->start_time->format('d/m/Y') }}</div>
+                            <div class="text-[#6B8F71] text-sm font-semibold">{{ $appointment->start_time->format('H:i') }}</div>
                         </td>
                         <td class="px-8 py-6 text-center">
                             @php
@@ -131,11 +131,11 @@
                 <div class="flex items-center gap-4 text-sm text-slate-500">
                     <div class="flex items-center gap-1">
                         <svg class="w-4 h-4 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                        {{ \Carbon\Carbon::parse($appointment->start_time)->format('d/m/Y') }}
+                        {{ $appointment->start_time->format('d/m/Y') }}
                     </div>
                     <div class="flex items-center gap-1">
                         <svg class="w-4 h-4 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        {{ \Carbon\Carbon::parse($appointment->start_time)->format('H:i') }}
+                        {{ $appointment->start_time->format('H:i') }}
                     </div>
                 </div>
             </a>

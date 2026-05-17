@@ -17,33 +17,14 @@ class AppointmentController extends Controller
     {
         $this->bookingService = $bookingService;
     }
-
-    // Danh sách lịch hẹn có thể lọc theo trạng thái + ngày
+    
     public function index(Request $request)
     {
-        $query = Appointment::with([
-            'user',
-            'service',
-            'employee',
-            'detail'
-        ])->latest();
-
-        if ($request->status) {
-            $query->where('status', $request->status);
-        }
-
-        if ($request->date) {
-            $query->whereDate('start_time', $request->date);
-        }
-
-        if ($request->keyword) {
-            $keyword = $request->keyword;
-            $query->whereHas('service', function ($q) use ($keyword) {
-                $q->where('name', 'like', "%{$keyword}%");
-        });
-    }
-
-        $appointments = $query->paginate(10);
+        $appointments = Appointment::with(['user', 'service', 'employee', 'appointmentDetail'])
+            ->filter($request->all()) // Áp dụng scope filter vừa tạo
+            ->latest()
+            ->paginate(10)
+            ->withQueryString(); // Đảm bảo giữ lại các tham số lọc khi chuyển trang phân trang
 
         return view('admin.appointments.index', compact('appointments'));
     }
@@ -54,7 +35,7 @@ class AppointmentController extends Controller
         $appointment->load([
             'user',
             'service',
-            'detail',
+            'appointmentDetail',
             'employee'
         ]);
 

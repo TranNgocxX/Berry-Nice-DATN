@@ -72,6 +72,16 @@
             </div>
 
             <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-2">Email <span class="text-red-500">*</span></label>
+                <input type="email" name="email"
+                          value="{{ old('email') }}"
+                       class="w-full px-5 py-4 border @error('email') border-red-400 @else border-green-300 @enderror focus:border-green-600 outline-none bg-white">
+                @error('email')
+                    <p class="mt-2 text-red-500 text-sm">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div>
                 <label class="block text-sm font-semibold text-slate-700 mb-2">Số điện thoại <span class="text-red-500">*</span></label>
                 <input type="text" name="phone"
                        value="{{ old('phone') }}"
@@ -81,6 +91,17 @@
                     <p class="mt-2 text-red-500 text-sm">{{ $message }}</p>
                 @enderror
             </div>
+
+            <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-2">Địa chỉ</label>
+                <input type="text" name="address"
+                       value="{{ old('address') }}"
+                       class="w-full px-5 py-4 border @error('address') border-red-400 @else border-green-300 @enderror focus:border-green-600 outline-none bg-white">
+                @error('address')
+                    <p class="mt-2 text-red-500 text-sm">{{ $message }}</p>
+                @enderror
+            </div>
+
         </div>
 
         <div class="mt-8">
@@ -136,15 +157,10 @@ document.addEventListener('DOMContentLoaded', function () {
         slotGrid.innerHTML = '<p class="col-span-4 text-sm">Đang tải khung giờ...</p>';
 
         try {
-            const response = await fetch(`/appointments/get-slots?service_id=${serviceId}&date=${date}`);
+            const response = await fetch(`/appointments/slots?service_id=${serviceId}&date=${date}`);
             const slots = await response.json();
 
             slotGrid.innerHTML = ''; // Clear loading
-
-            // Lấy thời gian hiện tại để so sánh
-            const now = new Date();
-            const selectedDate = new Date(date);
-            const isToday = now.toDateString() === selectedDate.toDateString();
 
             slots.forEach(slot => {
                 const btn = document.createElement('button');
@@ -153,28 +169,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 
                 let classes = "w-full py-4 text-sm font-medium border transition ";
                 
-                // Logic kiểm tra giờ đã qua
-                let isPast = false;
-                if (isToday) {
-                    const [hours, minutes] = slot.time.split(':');
-                    const slotDateTime = new Date(selectedDate);
-                    slotDateTime.setHours(parseInt(hours), parseInt(minutes), 0);
-                    
-                    if (slotDateTime <= now) {
-                        isPast = true;
-                    }
-                }
-
-                // Kết hợp điều kiện: Phải còn chỗ (available) VÀ chưa trôi qua (not isPast)
-                if (slot.available && !isPast) {
+                // Gọi đến API để kiểm tra nếu slot có sẵn hay không, và cập nhật giao diện tương ứng
+                if (slot.available) {
                     classes += "border-slate-300 hover:border-green-600 slot-btn-active shadow-sm";
-                    btn.onclick = () => selectSlot(btn, slot.time);
+                    btn.onclick = () => selectSlot(btn, slot);
                 } else {
                     classes += "bg-gray-100 border-gray-200 text-gray-400 cursor-not-allowed opacity-50";
                     btn.disabled = true;
                     
-                    // Hiển thị nhãn tương ứng
-                    if (isPast) {
+                    if (slot.is_past) {
                         btn.innerHTML += '<br><span class="text-[10px]">Đã qua</span>';
                     } else {
                         btn.innerHTML += '<br><span class="text-[10px]">Hết chỗ</span>';
@@ -189,14 +192,14 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    function selectSlot(btn, time) {
+    function selectSlot(btn, slot) {
         document.querySelectorAll('#time-slot-grid button').forEach(b => {
             b.classList.remove('bg-[#A8BCA1]', 'text-white', 'border-transparent');
             b.classList.add('border-slate-300');
         });
         btn.classList.remove('border-slate-300');
         btn.classList.add('bg-[#A8BCA1]', 'text-white', 'border-transparent');
-        hiddenTimeInput.value = dateInput.value + ' ' + time + ':00';
+        hiddenTimeInput.value = slot.datetime;
     }
 });
 </script>

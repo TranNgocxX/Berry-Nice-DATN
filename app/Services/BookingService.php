@@ -17,7 +17,7 @@ class BookingService
 
             $startTime = Carbon::parse($data['start_time']);
 
-            // Kiểm tra slot trống
+            // Ktra slot trống
             $count = Appointment::where('service_id', $service->id)
                 ->where('start_time', $startTime)
                 ->whereIn('status', ['pending', 'confirmed'])
@@ -43,9 +43,11 @@ class BookingService
             ]);
 
             // Tạo chi tiết lịch hẹn 
-            $appointment->detail()->create([
+            $appointment->appointmentDetail()->create([
                 'customer_name' => $data['customer_name'],
+                'email'        => $data['email'],
                 'phone'         => $data['phone'],
+                'address'       => $data['address'] ?? null,
                 'health_status' => $data['health_status'] ?? null,
                 'notes'         => $data['notes'] ?? null
             ]);
@@ -56,7 +58,7 @@ class BookingService
 
     public function confirmAppointment($appointment, $employeeId)
     {
-        // Logic kiểm tra trùng lịch nhân viên
+        // Logic ktra trùng lịch NV
         $busy = Appointment::where('employee_id', $employeeId)
             ->where('status', 'confirmed')
             ->where(function ($q) use ($appointment) {
@@ -80,11 +82,11 @@ class BookingService
     public function getEmployees($appointment)
     {
         return Employee::query()
-            // lọc nhân viên có kỹ năng phù hợp
+            // lọc NV có kỹ năng phù hợp
             ->whereHas('services', function ($q) use ($appointment) {
                 $q->where('services.id', $appointment->service_id);
             })
-            // sd Scope để check bận (trả về field is_busy kiểu boolean)
+            // sd Scope trong Employee để check bận 
             ->withBusyStatus($appointment->start_time, $appointment->end_time)
             ->get();
     }

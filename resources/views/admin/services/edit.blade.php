@@ -23,7 +23,7 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-semibold text-slate-700 mb-2">Loại dịch vụ</label>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Danh mục</label>
                     <select name="category_id" class="w-full px-5 py-4 border border-slate-200 rounded-2xl focus:outline-none focus:border-pink-300 focus:ring-pink-100">
                         @foreach($categories as $category)
                             <option value="{{ $category->id }}" {{ old('category_id', $service->category_id) == $category->id ? 'selected' : '' }}>

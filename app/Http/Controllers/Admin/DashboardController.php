@@ -22,7 +22,7 @@ class DashboardController extends Controller
     {
         $status = $request->input('status', 'all');
 
-        $appointments = Appointment::with(['detail', 'service'])
+        $appointments = Appointment::with(['appointmentDetail', 'service'])
             ->when($status !== 'all', function ($query) use ($status) {
                 $query->where('status', $status);
             })

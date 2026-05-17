@@ -39,8 +39,21 @@ class Appointment extends Model
         return $this->belongsTo(Employee::class);
     }
 
-    public function detail()
+    public function appointmentDetail()
     {
         return $this->hasOne(AppointmentDetail::class);
+    }
+
+    public function scopeFilter($query, array $filters)
+    {
+        return $query->when($filters['status'] ?? null, function ($q, $status) {
+            $q->where('status', $status);
+        })->when($filters['date'] ?? null, function ($q, $date) {
+            $q->whereDate('start_time', $date);
+        })->when($filters['keyword'] ?? null, function ($q, $keyword) {
+            $q->whereHas('service', function ($innerQ) use ($keyword) {
+                $innerQ->where('name', 'like', "%{$keyword}%");
+            });
+        });
     }
 }

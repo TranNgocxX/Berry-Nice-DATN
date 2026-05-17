@@ -57,7 +57,7 @@
 
     {{-- Section 2: Danh mục (các loại dịch vụ) --}}
     <section id="category-explorer" class="pt-14 md:pt-28 py-10 md:py-14 bg-[#FDFBF0] border-b border-slate-100" 
-            x-data="{ activeTab: {{ $serviceCategories->first()->id ?? 0 }} }">
+            x-data="{ activeTab: {{ $categories->first()->id ?? 0 }} }">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-6 md:mb-10">
                 <h2 class="text-2xl md:text-3xl font-bold logo-font text-slate-700 tracking-wide">Dịch vụ của BerryNice</h2>
@@ -65,28 +65,17 @@
             
             <div class="relative">
                 <div class="flex flex-nowrap md:flex-wrap md:justify-center gap-6 md:gap-10 mb-10 overflow-x-auto pb-4 md:pb-0 no-scrollbar select-none">
-                    @foreach($serviceCategories as $category)
+                    @foreach($categories as $category)
                     <div @click="activeTab = {{ $category->id }}" 
                         class="flex flex-col items-center cursor-pointer group transition-all duration-300 min-w-[90px] md:min-w-0 md:w-32 shrink-0"
                         :class="activeTab == {{ $category->id }} ? 'opacity-100 scale-105' : 'opacity-50 hover:opacity-100'">
 
                         <!-- Logo ảnh thay cho icon -->
                         <div class="w-30 h-30 mb-2 flex items-center justify-center transition-transform group-hover:rotate-12 background-size: cover">
-                            @php
-                                $name = Str::lower($category->name);
-                                $logo = 'default.png';
-                                if(Str::contains($name, 'da mặt')) $logo = 'facial.png';
-                                elseif(Str::contains($name, 'massage')) $logo = 'massage.png';
-                                elseif(Str::contains($name, 'tóc')) $logo = 'hair.png';
-                                elseif(Str::contains($name, 'tắm')) $logo = 'bath.png';
-                                elseif(Str::contains($name, 'waxing')) $logo = 'waxing.png';
-                                elseif(Str::contains($name, 'tẩy da')) $logo = 'scrub.png';
-
-                            @endphp
-
-                            <img src="{{ asset('storage/logos/' . $logo) }}" 
+                            <img src="{{ asset('storage/logos/' . $category->logo) }}" 
                                 alt="{{ $category->name }}" 
                                 class="w-12 h-12 object-contain" />
+
                         </div>
 
                         <!-- Tên danh mục -->
@@ -104,7 +93,7 @@
             </div>
 
             <div class="max-w-2xl mx-auto text-center px-4">
-                @foreach($serviceCategories as $category)
+                @foreach($categories as $category)
                 <div x-show="activeTab == {{ $category->id }}" x-transition class="space-y-5">
                     <p class="text-slate-500 leading-relaxed text-sm md:text-base font-normal">
                         {{ $category->description }}

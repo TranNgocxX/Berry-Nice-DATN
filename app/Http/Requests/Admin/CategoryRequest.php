@@ -13,7 +13,6 @@ class CategoryRequest extends FormRequest
 
     public function rules(): array
     {
-        // Lấy ID của category đang được update 
         $categoryId = $this->route('category') ? $this->route('category')->id : null;
 
         return [

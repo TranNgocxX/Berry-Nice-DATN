@@ -30,8 +30,8 @@ class ServiceRequest extends FormRequest
         return [
             'name.required' => 'Vui lòng nhập tên dịch vụ.',
             'name.max' => 'Tên dịch vụ không được vượt quá 255 ký tự.',
-            'category_id.required' => 'Vui lòng chọn loại dịch vụ.',
-            'category_id.exists' => 'Loại dịch vụ không hợp lệ.',
+            'category_id.required' => 'Vui lòng chọn danh mục',
+            'category_id.exists' => 'Danh mục không hợp lệ.',
             'image.image' => 'Tệp tải lên phải là hình ảnh.',
             'image.mimes' => 'Ảnh phải có định dạng jpg, jpeg hoặc png.',
             'image.max' => 'Ảnh không được vượt quá 2MB.',

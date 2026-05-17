@@ -14,15 +14,15 @@
         <p class="text-[#557A5E] text-lg md:text-2xl tracking-wide mb-2">
             {{ $appointment->service->name }}
         </p>
-        {{-- thời gian hẹn --}}
+        {{-- ( thời gian hẹn ) --}}
         <p class="text-sm text-slate-500 mt-1">
-            ({{ \Carbon\Carbon::parse($appointment->start_time)->format('H:i d/m/Y') }})
+            ( {{ $appointment->start_time->format('H:i d/m/Y') }} )
         </p>
     </div>
 
     <!-- Nội dung thông báo -->
     <section class="max-w-xl mx-auto text-left text-gray-700 leading-relaxed space-y-4">
-        <p>Xin chào <span class="font-bold text-emerald-700">{{ $appointment->detail->customer_name }}</span>,</p>
+        <p>Xin chào <span class="font-bold text-emerald-700">{{ $appointment->appointmentDetail->customer_name }}</span>,</p>
         <p>
             Cảm ơn bạn đã lựa chọn <span class="font-semibold text-emerald-700">BerryNice Spa</span>. 
         </p>

@@ -1,11 +1,11 @@
 @extends('layouts.admin')
 
-@section('title', 'Thêm loại dịch vụ mới')
+@section('title', 'Thêm danh mụcmới')
 
 @section('content')
 <div class="max-w-4xl mx-auto">
     <div class="mb-6">
-        <h1 class="text-2xl font-bold text-slate-800">Thêm loại dịch vụ mới</h1>
+        <h1 class="text-2xl font-bold text-slate-800">Thêm danh mục mới</h1>
         <p class="text-slate-500">Tạo danh mục dịch vụ cho hệ thống Spa</p>
     </div>
 
@@ -15,7 +15,7 @@
 
             <div class="mb-6">
                 <label class="block text-sm font-semibold text-slate-700 mb-2">
-                    Tên loại dịch vụ <span class="text-red-500">*</span>
+                    Tên danh mục <span class="text-red-500">*</span>
                 </label>
                 <input type="text" 
                        name="name" 
@@ -31,7 +31,7 @@
                 <textarea name="description" 
                           rows="5"
                           class="w-full px-5 py-4 border border-slate-200 rounded-2xl focus:outline-none focus:border-pink-300 focus:ring-4 focus:ring-pink-100 transition"
-                          placeholder="Mô tả chi tiết về loại dịch vụ...">{{ old('description') }}</textarea>
+                          placeholder="Mô tả chi tiết về danh mục...">{{ old('description') }}</textarea>
             </div>
 
             <div class="flex gap-4">
@@ -42,7 +42,7 @@
                 <button type="submit" 
                         class="flex-1 bg-pink-600 hover:bg-pink-700 text-white py-4 rounded-2xl font-semibold transition shadow-lg shadow-pink-500/30">
                     <i class="fas fa-save mr-2"></i>
-                    Lưu loại dịch vụ
+                    Lưu
                 </button>
             </div>
         </form>

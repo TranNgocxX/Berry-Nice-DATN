@@ -10,7 +10,7 @@
             <svg class="w-5 h-5 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
             </svg>
-            <span class="font-medium">Quay lại danh sách</span>
+            <span class="font-medium">Quay lại</span>
         </a>
     </div>
 
@@ -46,7 +46,7 @@
                 <div class="sm:text-right">
                     <p class="text-xs text-slate-400 uppercase">Thời gian hẹn</p>
                     <p class="font-semibold text-[#557A5E]">
-                        {{ \Carbon\Carbon::parse($appointment->start_time)->format('H:i d/m/Y') }}
+                        {{ $appointment->start_time->format('H:i d/m/Y') }}
                     </p>
                 </div>
             </div>
@@ -55,8 +55,8 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                     <p class="text-xs text-slate-400 uppercase">Khách hàng</p>
-                    <p class="font-semibold text-slate-700">{{ $appointment->customer_name ?? $appointment->user->name ?? 'N/A' }}</p>
-                    <p class="text-sm text-slate-500">{{ $appointment->detail->phone ?? 'Không có SĐT' }}</p>
+                    <p class="font-semibold text-slate-700">{{ $appointment->appointmentDetail->customer_name ?? $appointment->user->name ?? 'N/A' }}</p>
+                    <p class="text-sm text-slate-500">{{ $appointment->appointmentDetail->phone ?? 'Không có SĐT' }}</p>
                 </div>
                 <div>
                     <p class="text-xs text-slate-400 uppercase">Chuyên viên</p>
@@ -75,12 +75,18 @@
                 </span>
             </div>
 
-            <!-- Ghi chú -->
-            @if($appointment->detail?->note ?? $appointment->notes)
+            @if($appointment->appointmentDetail->health_status)
+                <div>
+                    <p class="text-xs text-slate-400 uppercase">Tình trạng sức khỏe</p>
+                    <p class="text-slate-600 text-sm mt-1">{{ $appointment->appointmentDetail->health_status }}</p>
+                </div>
+            @endif
+
+            @if($appointment->appointmentDetail?->notes)
                 <div>
                     <p class="text-xs text-slate-400 uppercase">Ghi chú</p>
                     <p class="italic text-slate-500 text-sm mt-1">
-                        "{{ $appointment->detail->note ?? $appointment->notes }}"
+                            "{{ $appointment->appointmentDetail->notes }}"
                     </p>
                 </div>
             @endif

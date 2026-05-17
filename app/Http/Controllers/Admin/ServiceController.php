@@ -7,29 +7,19 @@ use App\Models\Service;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\Admin\ServiceRequest;
+use Illuminate\Support\Facades\Storage;
 
 class ServiceController extends Controller
 {
     public function index(Request $request)
     {
-    $keyword = $request->keyword;
+        $keyword = $request->keyword;
 
-    $services = Service::with('category')
-        ->when($keyword, function ($query) use ($keyword) {
-            $query->where('name', 'like', "%{$keyword}%")
-                  ->orWhere('short_description', 'like', "%{$keyword}%")
-                  ->orWhere('long_description', 'like', "%{$keyword}%")
-                  ->orWhereHas('category', function ($q) use ($keyword) {
-                      $q->where('name', 'like', "%{$keyword}%");
-                  });
-        })
-        ->latest()
-        ->paginate(10)
-        ->appends([
-            'keyword' => $keyword
-        ]);
+        $services = Service::with('category')
+            ->search($keyword) // Sử dụng scopeSearch trong model
+            ->latest()->paginate(9)->withQueryString();
 
-        return view('admin.services.index', compact('services'));
+        return view('admin.services.index', compact('services', 'keyword'));
     }
 
     /**
@@ -86,6 +76,10 @@ class ServiceController extends Controller
         $imagePath = $service->image;
 
         if ($request->hasFile('image')) {
+                // Xóa ảnh cũ nếu có
+            if ($service->image) {
+                Storage::disk('public')->delete($service->image);
+            }
             $imagePath = $request->file('image')
                 ->store('services', 'public');
         }
@@ -107,6 +101,10 @@ class ServiceController extends Controller
 
     public function destroy(Service $service)
     {
+        if ($service->image) {
+            Storage::disk('public')->delete($service->image);
+        }
+
         $service->delete();
 
         return redirect()->route('admin.services.index')
