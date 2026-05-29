@@ -5,14 +5,9 @@
 @section('content')
 <div class="max-w-6xl mx-auto px-4 sm:px-6 py-8">
     <!-- Header -->
-    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-        <div>
-            <h1 class="text-2xl md:text-3xl font-bold text-[#6B8F71]">Lịch sử đặt lịch</h1>
-            <p class="text-slate-500 text-sm mt-1">Theo dõi và quản lý các dịch vụ bạn đã đặt, dễ dàng xem lại chi tiết và trạng thái từng cuộc hẹn</p>
-        </div>
-        <a href="{{ route('home') }}" class="inline-block bg-[#6B8F71] hover:bg-[#557A5E] text-white px-6 py-3 rounded-3xl text-sm font-semibold transition">
-            Đặt lịch mới
-        </a>
+    {{-- <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8"> --}}
+    <div class="flex items-center justify-between mb-6">
+        <h1 class="text-2xl md:text-3xl font-bold text-[#6B8F71]">Lịch sử đặt lịch</h1>
     </div>
 
     <!-- Lọc & Tìm kiếm -->
@@ -28,7 +23,7 @@
                     </svg>
                 </span>
                 <input type="text" name="keyword" value="{{ request('keyword') }}" 
-                    placeholder="Tìm dịch vụ, nhân viên..." 
+                    placeholder="Tìm dịch vụ" 
                     class="w-full pl-11 pr-4 py-2.5 bg-slate-100 rounded-2xl text-sm text-slate-600 
                             focus:ring-2 focus:ring-[#6B8F71] outline-none transition">
             </div>
@@ -86,8 +81,8 @@
                             <div class="font-bold text-slate-800">{{ $appointment->service->name }}</div>
                         </td>
                         <td class="px-8 py-6">
-                            <div class="text-slate-700 font-medium">{{ \Carbon\Carbon::parse($appointment->start_time)->format('d/m/Y') }}</div>
-                            <div class="text-[#6B8F71] text-sm font-semibold">{{ \Carbon\Carbon::parse($appointment->start_time)->format('H:i') }}</div>
+                            <div class="text-slate-700 font-medium">{{ $appointment->start_time->format('d/m/Y') }}</div>
+                            <div class="text-[#6B8F71] text-sm font-semibold">{{ $appointment->start_time->format('H:i') }}</div>
                         </td>
                         <td class="px-8 py-6 text-center">
                             @php
@@ -131,11 +126,11 @@
                 <div class="flex items-center gap-4 text-sm text-slate-500">
                     <div class="flex items-center gap-1">
                         <svg class="w-4 h-4 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                        {{ \Carbon\Carbon::parse($appointment->start_time)->format('d/m/Y') }}
+                        {{ $appointment->start_time->format('d/m/Y') }}
                     </div>
                     <div class="flex items-center gap-1">
                         <svg class="w-4 h-4 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        {{ \Carbon\Carbon::parse($appointment->start_time)->format('H:i') }}
+                        {{ $appointment->start_time->format('H:i') }}
                     </div>
                 </div>
             </a>
@@ -147,7 +142,7 @@
                 <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4">
                     <svg class="w-10 h-10 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
                 </div>
-                <p class="text-slate-500 font-medium">Bạn chưa có lịch hẹn nào phù hợp.</p>
+                <p class="text-slate-500 font-medium">Bạn chưa có lịch hẹn nào.</p>
                 <a href="{{ route('home') }}" class="text-pink-600 text-sm font-semibold mt-2 inline-block">Khám phá dịch vụ ngay →</a>
             </div>
         @endif

@@ -10,7 +10,7 @@
             <svg class="w-5 h-5 mr-2 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
             </svg>
-            <span class="font-medium">Quay lại danh sách</span>
+            <span class="font-medium">Quay lại</span>
         </a>
     </div>
 
@@ -20,9 +20,8 @@
                 'pending' => ['class' => 'bg-amber-50 text-amber-600 border-amber-100', 'label' => 'Chờ xác nhận'],
                 'confirmed' => ['class' => 'bg-blue-50 text-blue-600 border-blue-100', 'label' => 'Đã xác nhận'],
                 'completed' => ['class' => 'bg-emerald-50 text-emerald-600 border-emerald-100', 'label' => 'Hoàn thành'],
-                // 'cancelled' => ['class' => 'bg-red-50 text-red-600 border-red-100', 'label' => 'Đã hủy'],
-                // 'rejected' => ['class' => 'bg-gray-50 text-gray-600 border-gray-100', 'label' => 'Bị từ chối'],
-                default => ['class' => 'bg-red-50 text-red-600 border-red-100', 'label' => 'Đã hủy']
+                'cancelled' => ['class' => 'bg-red-50 text-red-600 border-red-100', 'label' => 'Đã hủy'],
+                'rejected' => ['class' => 'bg-gray-50 text-gray-600 border-gray-100', 'label' => 'Bị từ chối'],
             };
         @endphp
 
@@ -46,7 +45,7 @@
                 <div class="sm:text-right">
                     <p class="text-xs text-slate-400 uppercase">Thời gian hẹn</p>
                     <p class="font-semibold text-[#557A5E]">
-                        {{ \Carbon\Carbon::parse($appointment->start_time)->format('H:i d/m/Y') }}
+                        {{ $appointment->start_time->format('H:i d/m/Y') }}
                     </p>
                 </div>
             </div>
@@ -55,8 +54,8 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                     <p class="text-xs text-slate-400 uppercase">Khách hàng</p>
-                    <p class="font-semibold text-slate-700">{{ $appointment->customer_name ?? $appointment->user->name ?? 'N/A' }}</p>
-                    <p class="text-sm text-slate-500">{{ $appointment->detail->phone ?? 'Không có SĐT' }}</p>
+                    <p class="font-semibold text-slate-700">{{ $appointment->appointmentDetail->customer_name ?? $appointment->user->name ?? 'N/A' }}</p>
+                    <p class="text-sm text-slate-500">{{ $appointment->appointmentDetail->phone ?? 'Không có SĐT' }}</p>
                 </div>
                 <div>
                     <p class="text-xs text-slate-400 uppercase">Chuyên viên</p>
@@ -75,12 +74,18 @@
                 </span>
             </div>
 
-            <!-- Ghi chú -->
-            @if($appointment->detail?->note ?? $appointment->notes)
+            @if($appointment->appointmentDetail->health_status)
+                <div>
+                    <p class="text-xs text-slate-400 uppercase">Tình trạng sức khỏe</p>
+                    <p class="text-slate-600 text-sm mt-1">{{ $appointment->appointmentDetail->health_status }}</p>
+                </div>
+            @endif
+
+            @if($appointment->appointmentDetail?->notes)
                 <div>
                     <p class="text-xs text-slate-400 uppercase">Ghi chú</p>
                     <p class="italic text-slate-500 text-sm mt-1">
-                        "{{ $appointment->detail->note ?? $appointment->notes }}"
+                            "{{ $appointment->appointmentDetail->notes }}"
                     </p>
                 </div>
             @endif
@@ -89,12 +94,11 @@
             <div class="flex justify-between items-center border-t pt-4">
                 <span class="text-xs text-slate-400 uppercase">Tổng thanh toán</span>
                 <span class="text-xl font-bold text-red-800">
-                    {{ number_format($appointment->service->price ?? 0) }}đ
+                    {{ number_format($appointment->price ?? 0) }}đ
                 </span>
             </div>
         </div>
 
-        <!-- Nút hành động -->
         <div class="px-6 pb-6">
             <button onclick="window.print()" class="w-full py-3 bg-[#6B8F71] text-white rounded-xl font-semibold hover:bg-[#557A5E] transition">
                 In hóa đơn / Lưu ảnh

@@ -1,11 +1,11 @@
 @extends('layouts.admin')
 
-@section('title', 'Sửa loại dịch vụ')
+@section('title', 'Sửa danh mục')
 
 @section('content')
 <div class="max-w-4xl mx-auto">
     <div class="mb-6">
-        <h1 class="text-2xl font-bold text-slate-800">Sửa loại dịch vụ</h1>
+        <h1 class="text-2xl font-bold text-slate-800">Sửa danh mục</h1>
         <p class="text-slate-500">{{ $category->name }}</p>
     </div>
 
@@ -15,7 +15,7 @@
             @method('PUT')
 
             <div class="mb-6">
-                <label class="block text-sm font-semibold text-slate-700 mb-2">Tên loại dịch vụ <span class="text-red-500">*</span></label>
+                <label class="block text-sm font-semibold text-slate-700 mb-2">Tên danh mục <span class="text-red-500">*</span></label>
                 <input type="text" 
                        name="name" 
                        value="{{ old('name', $category->name) }}"
