@@ -19,6 +19,8 @@ class AppointmentSeeder extends Seeder
                 'employee_id' => 1, 
                 'start_time' => Carbon::now()->addDays(1)->setTime(9, 0),
                 'status' => 'confirmed',
+                'price' => 200000,
+                'total_price' => 200000,
                 'payment_method' => 'qr',
                 'payment_status' => 'paid',
                 'details' => [
@@ -34,6 +36,8 @@ class AppointmentSeeder extends Seeder
                 'employee_id' => 3,
                 'start_time' => Carbon::now()->subDays(2)->setTime(14, 30),
                 'status' => 'completed',
+                'price' => 150000,
+                'total_price' => 150000,
                 'payment_method' => 'cash',
                 'payment_status' => 'paid',
                 'details' => [
@@ -49,6 +53,8 @@ class AppointmentSeeder extends Seeder
                 'employee_id' => 6,
                 'start_time' => Carbon::now()->addHours(5),
                 'status' => 'pending',
+                'price' => 300000,
+                'total_price' => 300000,
                 'payment_method' => 'cash',
                 'payment_status' => 'unpaid',
                 'details' => [
@@ -64,6 +70,8 @@ class AppointmentSeeder extends Seeder
                 'employee_id' => 7,
                 'start_time' => Carbon::now()->addDays(3)->setTime(10, 0),
                 'status' => 'pending',
+                'price' => 250000,
+                'total_price' => 225000,
                 'payment_method' => 'qr',
                 'payment_status' => 'unpaid',
                 'details' => [
@@ -79,6 +87,8 @@ class AppointmentSeeder extends Seeder
                 'employee_id' => 8,
                 'start_time' => Carbon::now()->addDays(3)->setTime(10, 0),
                 'status' => 'pending',
+                'price' => 200000,
+                'total_price' => 200000,
                 'payment_method' => 'qr',
                 'payment_status' => 'unpaid',
                 'details' => [
@@ -94,6 +104,8 @@ class AppointmentSeeder extends Seeder
                 'employee_id' => 2,
                 'start_time' => Carbon::now()->addDays(3)->setTime(10, 0),
                 'status' => 'pending',
+                'price' => 150000,
+                'total_price' => 150000,
                 'payment_method' => 'qr',
                 'payment_status' => 'unpaid',
                 'details' => [
@@ -118,6 +130,8 @@ class AppointmentSeeder extends Seeder
                 'start_time'     => $item['start_time'],
                 'end_time'       => $endTime,
                 'status'         => $item['status'],
+                'price'          => $item['price'],
+                'total_price'    => $item['total_price'],
                 'payment_method' => $item['payment_method'],
                 'payment_status' => $item['payment_status'],
                 'created_at'     => now(),
@@ -128,6 +142,7 @@ class AppointmentSeeder extends Seeder
             DB::table('appointment_details')->insert([
                 'appointment_id' => $appointmentId,
                 'customer_name'  => $item['details']['customer_name'],
+                'email'          => $item['details']['customer_name'] . '@example.com', // Tạo email giả dựa trên tên khách
                 'phone'          => $item['details']['phone'],
                 'health_status'  => $item['details']['health_status'],
                 'notes'          => $item['details']['notes'],

@@ -10,25 +10,25 @@ class HomeController extends Controller
 {
     public function index(Request $request)
     {
-        $serviceCategories = Category::all();
+        $categories = Category::all();
 
-        $featuredServices = Service::with('category')->latest()->take(6)->get();
+        $newServices = Service::with('category')->latest()->take(6)->get();
 
-        return view('user.home', compact('serviceCategories', 'featuredServices'));
+        return view('pages.home', compact('categories', 'newServices'));
     }
 
     public function about()
     {
-        return view('user.home.about');
+        return view('pages.about');
     }
 
     public function contact()
     {
-        return view('user.home.contact');
+        return view('pages.contact');
     }
 
     public function faq()
     {
-        return view('user.home.faq');
+        return view('pages.faq');
     }
 }

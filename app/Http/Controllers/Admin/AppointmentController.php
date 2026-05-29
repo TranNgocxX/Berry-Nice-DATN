@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Appointment;
 use App\Models\Employee;
+use App\Models\Service;
 use Illuminate\Http\Request;
 use App\Services\BookingService;
 
@@ -18,34 +19,17 @@ class AppointmentController extends Controller
         $this->bookingService = $bookingService;
     }
 
-    // Danh sách lịch hẹn có thể lọc theo trạng thái + ngày
     public function index(Request $request)
     {
-        $query = Appointment::with([
-            'user',
-            'service',
-            'employee',
-            'detail'
-        ])->latest();
+        $employees = Employee::all();
+        $services = Service::all();
 
-        if ($request->status) {
-            $query->where('status', $request->status);
-        }
+        $appointments = Appointment::with(['user', 'service', 'employee', 'appointmentDetail'])
+            ->filter($request->only(['keyword', 'employee_id', 'service_id', 'customer_name', 'status', 'date', 'sort']))
+            ->paginate(9)
+            ->withQueryString();
 
-        if ($request->date) {
-            $query->whereDate('start_time', $request->date);
-        }
-
-        if ($request->keyword) {
-            $keyword = $request->keyword;
-            $query->whereHas('service', function ($q) use ($keyword) {
-                $q->where('name', 'like', "%{$keyword}%");
-        });
-    }
-
-        $appointments = $query->paginate(10);
-
-        return view('admin.appointments.index', compact('appointments'));
+        return view('admin.appointments.index', compact('appointments', 'employees', 'services'));
     }
 
     // Xem chi tiết lịch hẹn + phân công nhân viên khi duyệt lịch
@@ -54,17 +38,17 @@ class AppointmentController extends Controller
         $appointment->load([
             'user',
             'service',
-            'detail',
+            'appointmentDetail',
             'employee'
         ]);
 
-        // chỉ lấy nhân viên làm được dịch vụ này + có thời gian rảnh vào khung giờ của lịch hẹn
+        // chỉ lấy NV làm được DV này + có tg rảnh vào khung giờ của lịch hẹn
         $employees = $this->bookingService->getEmployees($appointment);
 
         return view('admin.appointments.show', compact('appointment', 'employees'));
     }
 
-    // phân công nhân viên khi duyệt lịch
+    // phân công NV khi duyệt lịch
     public function confirm(Request $request, Appointment $appointment)
     {
         $request->validate([

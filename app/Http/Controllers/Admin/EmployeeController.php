@@ -15,19 +15,8 @@ class EmployeeController extends Controller
         $keyword = $request->keyword;
 
         $employees = Employee::with('services')
-            ->when($keyword, function ($query) use ($keyword) {
-                $query->where('name', 'like', "%{$keyword}%")
-                      ->orWhere('phone', 'like', "%{$keyword}%")
-                      ->orWhere('email', 'like', "%{$keyword}%")
-                      ->orWhereHas('services', function ($q) use ($keyword) {
-                          $q->where('name', 'like', "%{$keyword}%");
-                      });
-            })
-            ->latest()
-            ->paginate(10)
-            ->appends([
-                'keyword' => $keyword
-            ]);
+            ->search($keyword) 
+            ->latest()->paginate(9)->withQueryString();
 
         return view('admin.employees.index', compact('employees'));
     }

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('appointment_id')->constrained()->cascadeOnDelete();
 
             $table->string('customer_name');
-            $table->string('email')->nullable();
+            $table->string('email');
             $table->string('phone', 10);
             $table->text('address')->nullable();
             $table->text('health_status')->nullable();
