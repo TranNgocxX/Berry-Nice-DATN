@@ -73,17 +73,6 @@ class EmployeeController extends Controller
             ->with('success', 'Cập nhật nhân viên thành công.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    // public function destroy(Employee $employee)
-    // {
-    //     $employee->services()->detach();
-    //     $employee->delete();
-    //     return redirect()->route('admin.employees.index')
-    //         ->with('success', 'Xóa nhân viên thành công.');
-    // }
-
     public function destroy(Employee $employee)
     {
         $hasAppointment = $employee->appointments()
