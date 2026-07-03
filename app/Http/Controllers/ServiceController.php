@@ -11,34 +11,29 @@ class ServiceController extends Controller
     public function index(Request $request)
     {
         $keyword = $request->keyword;
-        $categories = Category::all();
 
         $services = Service::with('category')
-            ->when($keyword, function ($query, $keyword) {
-                $query->where('name', 'like', "%{$keyword}%");
-            })
-            ->latest()->paginate(9); 
+            ->filter(['keyword' => $keyword])
+            ->latest()
+            ->paginate(9)
+            ->withQueryString();
 
-        return view('user.services.index', compact('services', 'categories', 'keyword'));
+        return view('pages.services.index', compact('services', 'keyword'));
     }
 
-    // Hiển thị theo danh mục
-    public function byCategory($id)
+    public function byCategory(Category $category)
     {
-        $category = Category::findOrFail($id);
+        // Lấy danh sách DV trực tiếp từ danh mục đó
+        $services = $category->services()
+            ->latest()
+            ->paginate(9);
 
-        $services = Service::where('category_id', $id)
-            ->latest()->paginate(9);
-
-        $categories = Category::all();
-
-        return view('user.services.category', compact('category', 'services', 'categories'));
+        return view('pages.services.category', compact('category', 'services'));
     }
 
-    public function show($id)
+    public function show(Service $service)
     {
-        $service = Service::with(['category', 'employees'])->findOrFail($id);
-        $categories = Category::all();
-        return view('user.services.show', compact('service', 'categories'));
+        $service->load('category');
+        return view('pages.services.show', compact('service'));
     }
 }

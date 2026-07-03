@@ -3,46 +3,53 @@
 namespace App\Services;
 
 use App\Models\Service;
-use App\Models\Appointment;
 use Carbon\Carbon;
 
 class SlotService
 {
     public function getAvailableSlots($serviceId, $date)
     {
-        // Lấy thông tin DV để biết thời lượng và số slot tối đa
-        $service = Service::findOrFail($serviceId);
+        // Xác định khoảng thời gian của ngày đó
         $dayStart = Carbon::parse($date)->startOfDay();
-        $dayEnd = Carbon::parse($date)->endOfDay();
-        $now = Carbon::now();
+        $dayEnd = $dayStart->copy()->endOfDay();
 
-        // Lấy tất cả lịch hẹn đã đặt cho DV này trong ngày đã chọn (trạng thái pending hoặc confirmed)
-        $existingAppointments = Appointment::where('service_id', $serviceId)
-            ->whereIn('status', ['pending', 'confirmed'])
-            ->whereBetween('start_time', [$dayStart, $dayEnd])
-            ->get(['start_time', 'end_time']);
+        // Lấy dịch vụ cùng các lịch hẹn đã đặt trong ngày đó, chỉ lấy những lịch hẹn 'pending', 'confirmed' để tính slot trống
+        $service = Service::with(['appointments' => function ($query) use ($dayStart, $dayEnd) {
+            $query->whereIn('status', ['pending', 'confirmed'])
+                  ->whereBetween('start_time', [$dayStart, $dayEnd]);
+        }])->findOrFail($serviceId);
+
+        // Xđ khoảng thời gian làm việc của spa trong ngày 
+        $now = Carbon::now();
+        $slotInterval = (int) config('spa.working_hours.slot_interval', 30);
+        
+        $currentTime = $dayStart->copy()->setTimeFromTimeString(config('spa.working_hours.start', '08:00'));
+        $endTimeLimit = $dayStart->copy()->setTimeFromTimeString(config('spa.working_hours.end', '22:00'));
 
         $allSlots = [];
-        $currentTime = Carbon::createFromTime(8, 0);
-        $endTimeLimit = Carbon::createFromTime(22, 0);
 
-        while ($currentTime->copy()->addMinutes($service->duration) <= $endTimeLimit) {
-            $slotStart = $dayStart->copy()->setTime( $currentTime->hour, $currentTime->minute);
+        // Sinh slot từ giờ bắt đầu đến giờ kết thúc, cách nhau $slotInterval (30) phút
+        while ($currentTime->copy()->addMinutes($service->duration)->lte($endTimeLimit)) {
+            $slotStart = $currentTime->copy();
             $slotEnd = $slotStart->copy()->addMinutes($service->duration);
 
-            // Kiểm tra khung giờ có nằm trong quá khứ 0
-            $isPast = $slotStart->lessThan($now);
-            // Đếm số lượng lịch hẹn trùng với khung giờ này 
-            $overlapCount = $existingAppointments->filter(function ($app) use ($slotStart, $slotEnd) {
-                return $app->start_time < $slotEnd && $app->end_time > $slotStart;
-            })->count();
+            // Đếm số lịch trùng 
+            $overlapCount = $service->appointments->filter(fn($app) => 
+                $app->start_time->lt($slotEnd) && $app->end_time->gt($slotStart)
+            )->count();
+
+            // Xác định slot có phải là quá khứ hay 0, và có còn slot trống hay 0
+            $isPast = $slotStart->lt($now);
+            $hasOverlap = $overlapCount >= $service->max_slot;
 
             $allSlots[] = [
-                'time' => $currentTime->format('H:i'),
-                'available' => !$isPast && ($overlapCount < $service->max_slot),
+                'time'      => $slotStart->format('H:i'),
+                'is_past'   => $isPast, 
+                'available' => !$isPast && !$hasOverlap,
+                'datetime'  => $slotStart->toDateTimeString(), 
             ];
 
-            $currentTime->addMinutes(30);
+            $currentTime->addMinutes($slotInterval);
         }
 
         return $allSlots;

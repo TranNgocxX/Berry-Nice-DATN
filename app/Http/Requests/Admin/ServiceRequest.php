@@ -14,10 +14,11 @@ class ServiceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|max:255',
+            'name' => 'required|string|max:255',
+            'slug' => 'nullable|string|max:255|unique:services,slug,' . $this->route('service'),
             'category_id' => 'required|exists:categories,id',
-            'short_description' => 'nullable',
-            'long_description' => 'nullable',
+            'short_description' => 'nullable|string',
+            'long_description' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'duration' => 'required|integer|min:1',
             'max_slot' => 'required|integer|min:1',
@@ -30,8 +31,10 @@ class ServiceRequest extends FormRequest
         return [
             'name.required' => 'Vui lòng nhập tên dịch vụ.',
             'name.max' => 'Tên dịch vụ không được vượt quá 255 ký tự.',
-            'category_id.required' => 'Vui lòng chọn loại dịch vụ.',
-            'category_id.exists' => 'Loại dịch vụ không hợp lệ.',
+            'slug.max' => 'Slug không được vượt quá 255 ký tự.',
+            'slug.unique' => 'Slug đã tồn tại. Vui lòng chọn tên khác.',
+            'category_id.required' => 'Vui lòng chọn danh mục',
+            'category_id.exists' => 'Danh mục không hợp lệ.',
             'image.image' => 'Tệp tải lên phải là hình ảnh.',
             'image.mimes' => 'Ảnh phải có định dạng jpg, jpeg hoặc png.',
             'image.max' => 'Ảnh không được vượt quá 2MB.',

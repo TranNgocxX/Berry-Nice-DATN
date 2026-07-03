@@ -11,17 +11,17 @@ class AdminMiddleware
     // Xử lý request trước khi vào route
     public function handle(Request $request, Closure $next)
     {
-        // chưa đăng nhập -> chuyển hướng về login
+        // chưa login -> chuyển hướng về login
         if (!Auth::check()) {
             return redirect('/login')->with('error', 'Bạn cần đăng nhập');
         }
 
-        // không phải admin -> chuyển hướng về home
+        // 0 phải admin -> chuyển hướng về home
         if (Auth::user()->role !== 'admin') {
             return redirect('/home')->with('error', 'Không có quyền truy cập');
         }
 
-        // ✅ là admin -> cho qua
+        // là admin -> cho qua
         return $next($request);
     }
 }

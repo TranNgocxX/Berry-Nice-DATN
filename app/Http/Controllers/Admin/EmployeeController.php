@@ -15,19 +15,8 @@ class EmployeeController extends Controller
         $keyword = $request->keyword;
 
         $employees = Employee::with('services')
-            ->when($keyword, function ($query) use ($keyword) {
-                $query->where('name', 'like', "%{$keyword}%")
-                      ->orWhere('phone', 'like', "%{$keyword}%")
-                      ->orWhere('email', 'like', "%{$keyword}%")
-                      ->orWhereHas('services', function ($q) use ($keyword) {
-                          $q->where('name', 'like', "%{$keyword}%");
-                      });
-            })
-            ->latest()
-            ->paginate(10)
-            ->appends([
-                'keyword' => $keyword
-            ]);
+            ->search($keyword)
+            ->latest()->paginate(9)->withQueryString();
 
         return view('admin.employees.index', compact('employees'));
     }
@@ -87,11 +76,35 @@ class EmployeeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
+    // public function destroy(Employee $employee)
+    // {
+    //     $employee->services()->detach();
+    //     $employee->delete();
+    //     return redirect()->route('admin.employees.index')
+    //         ->with('success', 'Xóa nhân viên thành công.');
+    // }
+
     public function destroy(Employee $employee)
     {
+        $hasAppointment = $employee->appointments()
+            ->whereIn('status', [
+                'confirmed',
+                'completed',
+            ])
+            ->exists();
+
+        if ($hasAppointment) {
+            return back()->with(
+                'error',
+                'Không thể xóa nhân viên vì đã hoặc đang được phân công thực hiện lịch hẹn.'
+            );
+        }
+
         $employee->services()->detach();
         $employee->delete();
-        return redirect()->route('admin.employees.index')
+
+        return redirect()
+            ->route('admin.employees.index')
             ->with('success', 'Xóa nhân viên thành công.');
     }
 }

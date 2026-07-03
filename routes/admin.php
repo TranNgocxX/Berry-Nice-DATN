@@ -8,22 +8,23 @@ use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\ServiceController as AdminServiceController;
 use App\Http\Controllers\Admin\AppointmentController as AdminAppointmentController;
 
-// Lưu ý: Vì đã có ->as('admin.') ở file app.php nên ->name('dashboard') sẽ thành 'admin.dashboard'
+// đã có ->as('admin.') ở app.php nên ->name('dashboard') sẽ thành 'admin.dashboard'
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
+Route::get('/dashboard/chart', [DashboardController::class, 'chartData'])->name('dashboard.chart');
+//
 Route::resource('categories', CategoryController::class);
 Route::resource('services', AdminServiceController::class);
 Route::resource('employees', EmployeeController::class);
 
 Route::get('/search', [DashboardController::class, 'search'])->name('admin.search');
 
-// Group cho Profile của Admin
+// Group cho in4 của Admin
 Route::prefix('profile')->group(function () {
-    // Tên đầy đủ: admin.profile
-    Route::get('/', [ProfileController::class, 'adminProfile'])->name('profile');    
-    // Tên đầy đủ: admin.profile.update
+    // admin.profile
+    Route::get('/', [ProfileController::class, 'adminProfile'])->name('profile.index');    
+    // admin.profile.update
     Route::put('/update', [ProfileController::class, 'update'])->name('profile.update');
-    // Tên đầy đủ: admin.profile.password
+    // admin.profile.password
     Route::put('/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
 });
 
