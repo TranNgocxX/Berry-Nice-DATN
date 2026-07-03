@@ -2,10 +2,10 @@
 @section('title', 'Thêm nhân viên mới')
 
 @section('content')
-<div class="max-w-4xl mx-auto">
+<div class="max-w-7xl mx-auto h-fit">
     <div class="mb-6">
-        <h1 class="text-2xl font-bold text-slate-800">Thêm nhân viên mới</h1>
-        <p class="text-slate-500">Nhập thông tin nhân viên Spa</p>
+        <h1 class="text-2xl font-bold text-slate-800">Thêm mới</h1>
+        <p class="text-slate-500">Nhập thông tin nhân viên</p>
     </div>
 
     <div class="bg-white rounded-3xl shadow-sm p-8">

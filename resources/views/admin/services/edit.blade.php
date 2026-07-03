@@ -3,11 +3,22 @@
 @section('title', 'Sửa dịch vụ')
 
 @section('content')
-<div class="max-w-4xl mx-auto">
+<div class="max-w-5xl mx-auto">
     <div class="mb-6">
         <h1 class="text-2xl font-bold text-slate-800">Sửa dịch vụ</h1>
         <p class="text-slate-500">{{ $service->name }}</p>
     </div>
+
+    @if ($errors->any())
+        <div class="mb-6 p-4 bg-red-50 border border-red-200 text-red-600 rounded-2xl text-sm">
+            <p class="font-semibold mb-1">Đã có lỗi xảy ra, vui lòng kiểm tra lại:</p>
+            <ul class="list-disc pl-5">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
     <div class="bg-white rounded-3xl shadow-sm p-8">
         <form action="{{ route('admin.services.update', $service) }}" method="POST" enctype="multipart/form-data">
@@ -23,7 +34,7 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-semibold text-slate-700 mb-2">Loại dịch vụ</label>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Danh mục</label>
                     <select name="category_id" class="w-full px-5 py-4 border border-slate-200 rounded-2xl focus:outline-none focus:border-pink-300 focus:ring-pink-100">
                         @foreach($categories as $category)
                             <option value="{{ $category->id }}" {{ old('category_id', $service->category_id) == $category->id ? 'selected' : '' }}>

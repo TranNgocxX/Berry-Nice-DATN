@@ -116,21 +116,34 @@
                         @method('PUT')
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
                             <div class="md:col-span-2">
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Mật khẩu hiện tại</label>
                                 <input type="password" name="current_password" 
                                        class="w-full px-5 py-3.5 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-pink-500">
                             </div>
+                            @error('current_password')
+                                <p class="mt-1 text-red-500 text-sm">{{ $message }}</p>
+                            @enderror
+
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Mật khẩu mới</label>
                                 <input type="password" name="password" 
                                        class="w-full px-5 py-3.5 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-pink-500">
                             </div>
+                            @error('password')
+                                <p class="mt-1 text-red-500 text-sm">{{ $message }}</p>
+                            @enderror
+
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Xác nhận mật khẩu mới</label>
                                 <input type="password" name="password_confirmation" 
                                        class="w-full px-5 py-3.5 border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-pink-500">
                             </div>
+                            @error('password_confirmation')
+                                <p class="mt-1 text-red-500 text-sm">{{ $message }}</p>
+                            @enderror
+                            
                         </div>
 
                         <div class="mt-8 flex justify-end">
@@ -139,15 +152,7 @@
                                 Đổi mật khẩu
                             </button>
                         </div>
-                        @if ($errors->any())
-                            <div class="mb-4 p-4 bg-red-100 text-red-700 rounded-xl">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
+
                     </form>
                 </div>
             </div>

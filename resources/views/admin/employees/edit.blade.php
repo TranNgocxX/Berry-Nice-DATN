@@ -2,7 +2,7 @@
 @section('title', 'Sửa thông tin nhân viên')
 
 @section('content')
-<div class="max-w-4xl mx-auto">
+<div class="max-w-7xl mx-auto">
     <div class="mb-6">
         <h1 class="text-2xl font-bold text-slate-800">Sửa thông tin nhân viên</h1>
         <p class="text-slate-500">{{ $employee->name }}</p>

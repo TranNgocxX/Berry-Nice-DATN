@@ -3,9 +3,9 @@
 @section('title', 'Thêm dịch vụ mới')
 
 @section('content')
-<div class="max-w-4xl mx-auto">
+<div class="max-w-5xl mx-auto">
     <div class="mb-6">
-        <h1 class="text-2xl font-bold text-slate-800">Thêm dịch vụ mới</h1>
+        <h1 class="text-2xl font-bold text-slate-800">Thêm mới</h1>
         <p class="text-slate-500">Tạo dịch vụ Spa cho khách hàng</p>
     </div>
 
@@ -23,7 +23,7 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-semibold text-slate-700 mb-2">Loại dịch vụ</label>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Danh mục</label>
                     <select name="category_id" 
                             class="w-full px-5 py-4 border border-slate-200 rounded-2xl focus:outline-none focus:border-pink-300 focus:ring-pink-100">
                         @foreach($categories as $category)

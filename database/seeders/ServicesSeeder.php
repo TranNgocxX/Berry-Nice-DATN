@@ -15,6 +15,7 @@ class ServicesSeeder extends Seeder
         DB::table('services')->insert([
             [
                 'name' => 'Tẩy tế bào chết siêu sâu và chống lão hóa bằng phương pháp mài mòn vi kim cương',
+                'slug' => 'tay-te-bao-chet-sieu-sau-va-chong-lao-hoa-bang-phuong-phap-mai-mon-vi-kim-cuong',
                 'category_id' => 1,
                 'short_description' => 'Tẩy tế bào chết bằng kim cương (Diamond Microdermabrasion) là một phương pháp an toàn, nhanh chóng và hiệu quả để làm trẻ hóa làn da. Quy trình nhẹ nhàng này sẽ tẩy tế bào chết sâu bên trong da, mang lại cảm giác tươi mới và trẻ hóa. Dòng điện siêu nhỏ kích hoạt các phản ứng hóa học ở cấp độ tế bào để phục hồi hoạt động của tế bào, trong khi năng lượng photon được sử dụng để kích thích quá trình tái tạo tế bào, làm chậm quá trình lão hóa, mang lại hiệu quả làm săn chắc và mịn màng da rõ rệt. Tẩy tế bào chết bằng kim cương sẽ phục hồi vẻ rạng rỡ tự nhiên của da, giảm hiệu quả độ sâu của các nếp nhăn và sẹo mụn, đồng thời cấp ẩm và cải thiện tuần hoàn máu đến lớp hạ bì, giúp làn da tươi sáng và trẻ hóa. Phương pháp điều trị không xâm lấn này mang lại kết quả tức thì và đáng kinh ngạc, không cần thời gian phục hồi. Phương pháp này phù hợp với mọi loại da.',
                 'long_description' => null,
@@ -26,7 +27,8 @@ class ServicesSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'name' => 'CLiệu pháp thanh lọc oxy Hydra và liệu pháp ánh sáng LED',
+                'name' => 'Liệu pháp thanh lọc oxy Hydra và liệu pháp ánh sáng LED',
+                'slug' => 'lieu-phap-thanh-loc-oxy-hydra-va-lieu-phap-anh-sang-led',
                 'category_id' => 1,
                 'short_description' => 'Liệu trình chống lão hóa năng động này mang đến sự biến đổi toàn diện cho làn da. Để tái tạo da hoàn toàn, quá trình làm sạch sâu bằng oxy loại bỏ tế bào chết và tạp chất. Tinh chất tăng cường tế bào DNA cá hồi thúc đẩy tốc độ tái tạo và phục hồi tế bào da, đồng thời cải thiện kết cấu da và giảm sắc tố hiệu quả. Nó cũng cải thiện tông màu da, giảm nếp nhăn và tăng độ đàn hồi cho da bằng cách củng cố lớp biểu bì và lớp hạ bì. Liệu pháp ánh sáng LED chống lại mụn trứng cá và xóa tan mọi dấu vết của làn da xỉn màu, thiếu sức sống. Liệu trình kết thúc bằng xịt oxy tinh khiết giúp làm căng da. Kết quả là làn da mịn màng, tươi sáng và rạng rỡ.',
                 'long_description' => null,
@@ -39,6 +41,7 @@ class ServicesSeeder extends Seeder
             ],
             [
                 'name' => 'Liệu trình chăm sóc da mặt bằng ngọc bích giúp tái tạo cơ thể và tâm hồn',
+                'slug' => 'lieu-trinh-cham-soc-da-mat-bang-ngoc-bich-giup-tai-tao-co-the-va-tam-hon',
                 'category_id' => 1,
                 'short_description' => 'Liệu trình bắt đầu với bước làm sạch da mặt, tẩy tế bào chết và loại bỏ tạp chất để mang lại cho làn da vẻ tươi mới, rạng rỡ và đều màu. Mặt nạ thư giãn đặc biệt của Comforzone được đắp lên, tiếp theo là kem dưỡng phục hồi với tinh dầu hoa cam và hoa cúc để làm dịu làn da mệt mỏi, đau rát và tăng cường lưu thông khí huyết.',
                 'long_description' => null,
@@ -51,6 +54,7 @@ class ServicesSeeder extends Seeder
             ],
             [
                 'name' => 'Chăm sóc da mặt nhanh',
+                'slug' => 'cham-soc-da-mat-nhanh',
                 'category_id' => 1,
                 'short_description' => 'Liệu trình chăm sóc da mặt này rất lý tưởng cho những người bận rộn. Da của bạn sẽ được làm sạch, tẩy tế bào chết và massage nhẹ nhàng. Liệu trình tuyệt vời này kết thúc bằng việc thoa dầu dưỡng da mặt.',
                 'long_description' => null,
@@ -64,6 +68,7 @@ class ServicesSeeder extends Seeder
 
             [
                 'name' => 'Phương pháp gội đầu truyền thống của Việt Nam',
+                'slug' => 'phuong-phap-goi-dau-truyen-thong-cua-viet-nam',
                 'category_id' => 2,
                 'short_description' => 'Lấy cảm hứng từ một phương pháp chữa bệnh truyền thống của Việt Nam, liệu trình này sử dụng hỗn hợp thảo dược tự nhiên gồm quả Gleditsia, Litsea, húng quế và sả để làm sạch và dưỡng tóc. Kỹ thuật bấm huyệt được áp dụng lên vùng đầu và cổ để giải tỏa căng thẳng và phục hồi năng lượng. Liệu trình kết thúc bằng việc gội và xả tóc bằng dầu argan cao cấp, cùng với bước thoa dầu dưỡng tóc cuối cùng, giúp bạn có mái tóc được nuôi dưỡng, mềm mượt và khỏe mạnh.',
                 'long_description' => null,
@@ -76,6 +81,7 @@ class ServicesSeeder extends Seeder
             ],
             [
                 'name' => 'Massage đầu bằng dầu Ayurvedic Shiradhara',
+                'slug' => 'massage-dau-bang-dau-ayurvedic-shiradhara',
                 'category_id' => 2,
                 'short_description' => 'Làm sạch tóc kết hợp massage da đầu và cổ vai gáy.',
                 'long_description' => null,
@@ -88,6 +94,7 @@ class ServicesSeeder extends Seeder
             ],
             [
                 'name' => 'Liệu trình hấp làm mượt tóc bằng keratin',
+                'slug' => 'lieu-trinh-hap-lam-muot-toc-bang-keratin',
                 'category_id' => 2,
                 'short_description' => 'Phương pháp hấp tóc là một cách tuyệt vời để chăm sóc tóc, vì hơi nóng giúp cấp ẩm cho những sợi tóc khô và thúc đẩy tuần hoàn máu. Kết hợp với liệu trình Keratin, phương pháp này giúp phục hồi hư tổn, mang lại cho mái tóc khỏe mạnh, bóng mượt và rạng rỡ hơn.',
                 'long_description' => null,
@@ -101,6 +108,7 @@ class ServicesSeeder extends Seeder
 
             [
                 'name' => 'Massage trị liệu đặc trưng Body&Soul',
+                'slug' => 'massage-tri-lieu-dac-trung-body-and-soul',
                 'category_id' => 3,
                 'short_description' => 'Trải nghiệm liệu pháp massage thư giãn sâu giúp cân bằng tâm trí và cơ thể. Liệu pháp này sử dụng các loại dầu trị liệu ấm và kết hợp nhiều kỹ thuật khác nhau, bao gồm massage Việt Nam, Bali, Thụy Điển và Shiatsu, để thúc đẩy cảm giác cân bằng và khỏe mạnh tuyệt vời.',
                 'long_description' => null,
@@ -113,6 +121,7 @@ class ServicesSeeder extends Seeder
             ],
             [
                 'name' => 'Massage truyền thống Việt Nam',
+                'slug' => 'massage-truyen-thong-viet-nam',
                 'category_id' => 3,
                 'short_description' => 'Liệu pháp massage mô sâu này tập trung vào các cơ và gân. Bằng cách áp dụng các kỹ thuật cổ truyền và sự kết hợp của các loại thảo dược đắp từ ngải cứu, húng quế và gừng, liệu pháp này giúp phục hồi và cân bằng lại “khí” nằm ở cột sống. Massage này không chỉ giúp giải phóng căng thẳng cơ bắp mà còn mang lại cho bạn cảm giác thư giãn, đầu óc minh mẫn và tràn đầy năng lượng.',
                 'long_description' => null,
@@ -125,6 +134,7 @@ class ServicesSeeder extends Seeder
             ],
             [
                 'name' => 'Chỉ massage mô sâu',
+                'slug' => 'chi-massage-mo-sau',
                 'category_id' => 3,
                 'short_description' => 'Phương pháp massage này kết hợp nhiều kỹ thuật tập trung vào các lớp cơ sâu hơn. Mục tiêu là giải phóng căng thẳng mãn tính bằng các động tác mạnh mẽ và áp lực ngón tay sâu vào các vùng bị co cứng. Bấm huyệt cũng được sử dụng để thúc đẩy lưu thông máu và bạch huyết, cải thiện tuần hoàn tổng thể.',
                 'long_description' => null,
@@ -138,6 +148,7 @@ class ServicesSeeder extends Seeder
 
             [
                 'name' => 'Tẩy tế bào chết toàn thân Just Body Polish với muối hữu cơ',
+                'slug' => 'tay-te-bao-chet-toan-than-just-body-polish-voi-muoi-huu-co',
                 'category_id' => 4,
                 'short_description' => null,
                 'long_description' => null,
@@ -150,6 +161,7 @@ class ServicesSeeder extends Seeder
             ],
             [
                 'name' => 'Tẩy tế bào chết toàn thân Just Body Polish với muối gừng',
+                'slug' => 'tay-te-bao-chet-toan-than-just-body-polish-voi-muoi-gung',
                 'category_id' => 4,
                 'short_description' => null,
                 'long_description' => null,
@@ -162,6 +174,7 @@ class ServicesSeeder extends Seeder
             ],
             [
                 'name' => 'Tẩy tế bào chết toàn thân Just Body Polish với cà phê hữu cơ',
+                'slug' => 'tay-te-bao-chet-toan-than-just-body-polish-voi-ca-phe-huu-co',
                 'category_id' => 4,
                 'short_description' => null,
                 'long_description' => null,
@@ -175,6 +188,7 @@ class ServicesSeeder extends Seeder
 
             [
                 'name' => 'Tẩy tế bào chết body',
+                'slug' => 'tay-te-bao-chet-body',
                 'category_id' => 5,
                 'short_description' => null,
                 'long_description' => null,
@@ -188,6 +202,7 @@ class ServicesSeeder extends Seeder
 
             [
                 'name' => 'Tẩy lông mặt',
+                'slug' => 'tay-long-mat',
                 'category_id' => 5,
                 'short_description' => null,
                 'long_description' => null,
@@ -200,6 +215,7 @@ class ServicesSeeder extends Seeder
             ],
             [
                 'name' => 'Tẩy lông toàn bộ cánh tay',
+                'slug' => 'tay-long-toan-bo-canh-tay',
                 'category_id' => 5,
                 'short_description' => null,
                 'long_description' => null,
@@ -212,6 +228,7 @@ class ServicesSeeder extends Seeder
             ],
             [
                 'name' => 'Tẩy lông toàn bộ chân',
+                'slug' => 'tay-long-toan-bo-chan',
                 'category_id' => 5,
                 'short_description' => 'Wax lông chân an toàn, giảm kích ứng.',
                 'long_description' => null,
@@ -225,6 +242,7 @@ class ServicesSeeder extends Seeder
 
             [
                 'name' => 'Tắm trắng sữa dê',
+                'slug' => 'tam-trang-sua-de',
                 'category_id' => 6,
                 'short_description' => 'Liệu trình kết hợp sữa dê non và phương pháp thanh tẩy sâu giúp làn da bạn mượt mà, trắng hồng và mềm mịn như em bé.',
                 'long_description' => null,
@@ -237,6 +255,7 @@ class ServicesSeeder extends Seeder
             ],
             [
                 'name' => 'Tắm cấp trắng cherry tuyết',
+                'slug' => 'tam-cap-trang-cherry-tuyet',
                 'category_id' => 6,
                 'short_description' => 'Phương pháp độc quyền từ Bông Spa sử dụng hơn 20 loại axit trái cây và chiết xuất lá lô hội, kết hợp với nước lựu đỏ và tinh chất chamomile, mang lại:
                                     Tông da cải thiện, mịn màng và trắng sáng.

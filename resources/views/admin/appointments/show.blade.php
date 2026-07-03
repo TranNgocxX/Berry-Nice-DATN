@@ -13,11 +13,11 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
                 <p class="text-sm font-semibold text-slate-500 mb-1">KHÁCH HÀNG</p>
-                <p class="text-xl font-semibold text-slate-800">{{ $appointment->detail->customer_name }}</p>
+                <p class="text-xl font-semibold text-slate-800">{{ $appointment->appointmentDetail->customer_name }}</p>
             </div>
             <div>
                 <p class="text-sm font-semibold text-slate-500 mb-1">SỐ ĐIỆN THOẠI</p>
-                <p class="text-xl font-semibold text-slate-800">{{ $appointment->detail->phone }}</p>
+                <p class="text-xl font-semibold text-slate-800">{{ $appointment->appointmentDetail->phone }}</p>
             </div>
         </div>
 
@@ -48,17 +48,17 @@
             </div>
         </div>
 
-        @if($appointment->detail->health_status)
+        @if($appointment->appointmentDetail?->health_status)
         <div class="mt-8">
             <p class="text-sm font-semibold text-slate-500 mb-1">TÌNH TRẠNG SỨC KHỎE</p>
-            <p class="bg-slate-50 p-4 rounded-2xl">{{ $appointment->detail->health_status }}</p>
+            <p class="bg-slate-50 p-4 rounded-2xl">{{ $appointment->appointmentDetail->health_status }}</p>
         </div>
         @endif
 
-        @if($appointment->detail->notes)
+        @if($appointment->appointmentDetail->notes)
         <div class="mt-8">
             <p class="text-sm font-semibold text-slate-500 mb-1">GHI CHÚ</p>
-            <p class="bg-slate-50 p-4 rounded-2xl">{{ $appointment->detail->notes }}</p>
+            <p class="bg-slate-50 p-4 rounded-2xl">{{ $appointment->appointmentDetail->notes }}</p>
         </div>
         @endif
 
@@ -147,7 +147,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
-            Quay lại danh sách
+            Quay lại
         </a>
     </div>
 </div>

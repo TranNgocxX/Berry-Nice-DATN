@@ -28,6 +28,9 @@ return new class extends Migration
                 'cancelled'
             ])->default('pending')->index();
 
+            $table->decimal('price', 15, 2); // Lưu giá gốc từ bảng services sang
+            $table->decimal('total_price', 15, 2); 
+
             $table->enum('payment_method', ['cash', 'qr'])->default('cash');
             $table->enum('payment_status', ['unpaid', 'paid'])->default('unpaid')->index();
             $table->index(['service_id', 'status', 'start_time'], 'idx_service_slots_check');

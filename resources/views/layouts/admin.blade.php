@@ -59,7 +59,7 @@
 
             <p class="px-4 py-2 mt-4 text-[11px] font-semibold text-slate-500 uppercase tracking-wider">Tài khoản</p>
 
-            <a href="{{ route('profile') }}" class="sidebar-link flex items-center px-4 py-3 rounded-md transition {{ request()->is('profile*') ? 'active-nav' : '' }}">
+            <a href="{{ route('profile.index') }}" class="sidebar-link flex items-center px-4 py-3 rounded-md transition {{ request()->is('admin/profile*') ? 'active-nav' : '' }}">
                 <i class="fas fa-id-card w-5"></i>
                 <span class="ml-3 text-sm font-medium">Hồ sơ của tôi</span>
             </a>
@@ -132,6 +132,39 @@
                 }, 4000);
             </script>
             @endif
+
+            @if(session('error'))
+                <div id="toast-error"
+                    class="fixed top-5 right-5 z-50 flex items-center w-full max-w-md p-4 text-gray-500 bg-white rounded-2xl shadow-2xl border-l-4 border-red-500 transform transition-all duration-500 translate-x-0"
+                    role="alert">
+
+                    <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg">
+                        <i class="fas fa-circle-exclamation"></i>
+                    </div>
+
+                    <div class="ml-3 text-sm font-bold text-slate-700">
+                        {{ session('error') }}
+                    </div>
+
+                    <button type="button"
+                        onclick="this.parentElement.remove()"
+                        class="ml-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg p-1.5 inline-flex h-8 w-8">
+                        <i class="fas fa-times"></i>
+                    </button>
+
+                </div>
+
+                <script>
+                setTimeout(() => {
+                    const toast = document.getElementById('toast-error');
+                    if (toast) {
+                        toast.style.opacity = '0';
+                        toast.style.transform = 'translateX(100px)';
+                        setTimeout(() => toast.remove(), 500);
+                    }
+                }, 4000);
+                </script>
+                @endif
 
             <div class="content-body">
                 @yield('content')

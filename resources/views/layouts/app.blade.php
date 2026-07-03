@@ -8,7 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600&family=Poppins:wght@500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
@@ -26,7 +26,6 @@
 </head>
 
 <body class="bg-[#FDFBF0] text-slate-800">
-
     <!-- Navbar -->
     <nav class="bg-white shadow-sm sticky top-0 z-50"
          x-data="{ mobileMenu: false, mobileProfile: false }">
@@ -34,7 +33,7 @@
         <div class="w-full px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
 
-                <!-- 1. Menu Mobile Button (Hiện bên trái trên Mobile) -->
+                <!-- 1. Menu Mobile Button (bên trái) -->
                 <div class="flex md:hidden order-1">
                     <button @click="mobileMenu = !mobileMenu; mobileProfile = false"
                             class="w-10 h-10 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 flex items-center justify-center text-slate-700 transition">
@@ -52,7 +51,7 @@
                     </a>
                 </div>
 
-                <!-- 3. Desktop Menu (Ẩn trên mobile) -->
+                <!-- 3. Desktop Menu -->
                 <div class="hidden md:flex items-center gap-8 lg:gap-12 order-2">
                     <a href="{{ route('home') }}" class="font-medium hover:text-[#557A5E] transition">Trang chủ</a>
 
@@ -63,8 +62,8 @@
                             <i class="fas fa-chevron-down text-xs transition" :class="{ 'rotate-180': open }"></i>
                         </button>
                         <div x-show="open" x-transition class="absolute left-0 mt-3 bg-white shadow-2xl rounded-2xl py-3 w-56 z-50 border border-slate-100">
-                            @foreach($serviceCategories as $category)
-                                <a href="{{ route('services.category', $category->id) }}"
+                            @foreach($categories as $category)
+                                <a href="{{ route('services.category', $category) }}"
                                    class="block px-6 py-3 hover:bg-[#FDFBF0] transition text-sm">
                                     {{ $category->name }}
                                 </a>
@@ -72,18 +71,19 @@
                         </div>
                     </div>
 
-                    <a href="#" class="font-medium hover:text-[#557A5E] transition">Về chúng tôi</a>
-                    <a href="#" class="font-medium hover:text-[#557A5E] transition">Q&A</a>
+                    <a href="{{ route('about') }}" class="font-medium hover:text-[#557A5E] transition">Về chúng tôi</a>
+                    <a href="{{ route('faq') }}" class="font-medium hover:text-[#557A5E] transition">Q&A</a>
+                    <a href="{{ route('contact') }}" class="font-medium hover:text-[#557A5E] transition">Liên hệ</a>
                 </div>
 
-                <!-- 4. Auth & Profile (Hiện bên phải) -->
+                <!-- 4. Auth & Profile (bên phải) -->
                 <div class="flex items-center gap-4 order-3">
                     
                     <!-- Desktop Auth -->
                     <div class="hidden md:block">
                         @guest
                             <a href="{{ route('login') }}"
-                               class="px-5 py-2 rounded-xl border border-green-300 text-green-700 hover:bg-[#DDEAD1] transition font-medium">
+                               class = "px-5 py-2 rounded-xl bg-[#9CC69B] hover:bg-[#8BB98A] text-white transition font-medium">
                                 Đăng nhập
                             </a>
                         @endguest
@@ -103,11 +103,11 @@
                             <!-- Dropdown cho cả Desktop và Mobile Profile -->
                             <div x-show="open" x-transition x-cloak @click.away="open = false" 
                                  class="absolute right-0 mt-3 bg-white shadow-2xl rounded-2xl py-2 w-60 z-50 border border-slate-100">
-                                <a href="{{ route('profile') }}" class="flex items-center gap-3 px-6 py-3 hover:bg-[#FDFBF0] transition">
+                                <a href="{{ route('profile.index') }}" class="flex items-center gap-3 px-6 py-3 hover:bg-[#FDFBF0] transition">
                                     <i class="fas fa-user-circle text-slate-400"></i>
                                     <span>Thông tin cá nhân</span>
                                 </a>
-                                <a href="{{ route('appointments.index') }}" class="flex items-center gap-3 px-6 py-3 hover:bg-[#FDFBF0] transition">
+                                <a href="{{ route('bookings.index') }}" class="flex items-center gap-3 px-6 py-3 hover:bg-[#FDFBF0] transition">
                                     <i class="fas fa-calendar-alt text-slate-400"></i>
                                     <span>Lịch của tôi</span>
                                 </a>
@@ -123,7 +123,7 @@
                         </div>
                     @endauth
 
-                    <!-- Đăng nhập (Nếu chưa) -->
+                    <!-- Đăng nhập (Mobile nếu chưa) -->
                     @guest
                         <div class="md:hidden">
                             <a href="{{ route('login') }}" class="text-green-700 font-medium text-sm">Đăng nhập</a>
@@ -144,23 +144,23 @@
                         <i class="fas fa-chevron-down text-xs transition" :class="{ 'rotate-180': open }"></i>
                     </button>
                     <div x-show="open" x-transition class="mt-2 space-y-1 pl-4 border-l border-slate-200">
-                        @foreach($serviceCategories as $category)
-                            <a href="{{ route('services.category', $category->id) }}" class="block py-2 text-slate-600">{{ $category->name }}</a>
+                        @foreach($categories as $category)
+                            <a href="{{ route('services.category', $category) }}" class="block py-2 text-slate-600">{{ $category->name }}</a>
                         @endforeach
                     </div>
                 </div>
-                <a href="#" class="block py-3 font-medium">Về chúng tôi</a>
-                <a href="#" class="block py-3 font-medium">Q&A</a>
+                <a href="{{ route('about') }}" class="block py-3 font-medium">Về chúng tôi</a>
+                <a href="{{ route('faq') }}" class="block py-3 font-medium">Q&A</a>
+                <a href="{{ route('contact') }}" class="block py-3 font-medium">Liên hệ</a>
             </div>
         </div>
 
     </nav>
 
-    <!-- Main -->
     <main class="relative z-10">
         @yield('content')
     </main>
-
+    
     @include('layouts.footer')
 
 </body>

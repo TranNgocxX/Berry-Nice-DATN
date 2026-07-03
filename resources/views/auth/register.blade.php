@@ -1,151 +1,74 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
+    <meta charset="UTF-8">
     <title>Đăng ký</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        .container {
-            display: flex;
-            height: 100vh;
-        }
-        .left {
-            flex: 1;
-            background-color: #A8BCA1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            text-align: center;
-            padding: 40px;
-        }
-        .left h1 {
-            font-size: 36px;
-            margin-bottom: 10px;
-        }
-        .left p {
-            font-size: 18px;
-            margin-bottom: 20px;
-        }
-        .left button {
-            padding: 12px 24px;
-            background-color: #fff;
-            color: #6B8F71;
-            border: none;
-            border-radius: 25px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .left button:hover {
-            background-color: #f1f1f1;
-        }
-        .right {
-            flex: 1;
-            background-color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .form-box {
-            width: 80%;
-            max-width: 400px;
-        }
-        h2 {
-            text-align: center;
-            margin-bottom: 25px;
-            font-size: 32px;
-            font-weight: bold;
-            color: #1b6928;
-        }
-        input {
-            width: 100%;
-            padding: 14px;
-            font-size: 16px;
-            margin-bottom: 18px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            transition: border-color 0.3s;
-            box-sizing: border-box;
-        }
-        input:focus {
-            border-color: #A8BCA1;
-            outline: none;
-        }
-        button {
-            width: 100%;
-            padding: 16px;
-            font-size: 18px;
-            background-color: #6B8F71;
-            color: #fff;
-            border: none;
-            border-radius: 30px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        button:hover {
-            background-color: #557A5E;
-        }
-        a {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            color: #888;
-            text-decoration: none;
-            font-size: 13px;
-        }
-        a b {
-            color: #6B8F71;
-        }
-        a:hover b {
-            text-decoration: underline;
-        }
-        .invalid-feedback {
-            color: #d9534f;
-            font-size: 12px;
-            margin-top: -10px;
-            margin-bottom: 10px;
-            display: block;
-        }
-        input.is-invalid {
-            border-color: #d9534f;
-        }
-    </style>
+
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
 
-<div class="container">
-    <div class="left">
-        <h1>BerryNice</h1>
-        <p>Đăng ký ngay để trải nghiệm dịch vụ tiện lợi, nhanh chóng và thư giãn mỗi ngày</p>
-        <button>Khám phá thêm</button>
-    </div>
-    <div class="right">
-        <div class="form-box">
-            <h2>Tạo tài khoản mới</h2>
-            <form method="POST" action="/register">
-                @csrf
-                
-                <input name="name" value="{{ old('name') }}" class="{{ $errors->has('name') ? 'is-invalid' : '' }}" placeholder="Họ tên">
-                @error('name') <span class="invalid-feedback">{{ $message }}</span> @enderror
+<body class="min-h-screen bg-[#F8FAF8] flex items-center justify-center p-6">
 
-                <input name="email" type="email" value="{{ old('email') }}" class="{{ $errors->has('email') ? 'is-invalid' : '' }}" placeholder="Email">
-                @error('email') <span class="invalid-feedback">{{ $message }}</span> @enderror
+<div class="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
 
-                <input name="password" type="password" class="{{ $errors->has('password') ? 'is-invalid' : '' }}" placeholder="Mật khẩu">
-                @error('password') <span class="invalid-feedback">{{ $message }}</span> @enderror
+    <h1 class="text-3xl font-bold text-center text-[#4A6B53]">
+        BerryNice
+    </h1>
 
-                <input name="password_confirmation" type="password" placeholder="Nhập lại mật khẩu">
-                
-                <button type="submit">Đăng ký</button>
-            </form>
-            <a href="/login">Đã có tài khoản? <b>Đăng nhập ngay</b></a>
+    <p class="text-center text-slate-500 mt-2 mb-8">
+        Tạo tài khoản mới
+    </p>
+
+    <form method="POST" action="/register" class="space-y-5">
+        @csrf
+
+        <div>
+            <input
+                name="name" value="{{ old('name') }}" placeholder="Họ tên"
+                class="w-full rounded-xl border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#A8BCA1]
+                {{ $errors->has('name') ? 'border-red-500' : 'border-slate-300' }}">
+            @error('name')
+                <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+            @enderror
         </div>
-    </div>
+
+        <div>
+            <input
+                type="email" name="email" value="{{ old('email') }}" placeholder="Email"
+                class="w-full rounded-xl border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#A8BCA1]
+                {{ $errors->has('email') ? 'border-red-500' : 'border-slate-300' }}">
+            @error('email')
+                <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <div>
+            <input
+                type="password" name="password" placeholder="Mật khẩu"
+                class="w-full rounded-xl border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#A8BCA1]
+                {{ $errors->has('password') ? 'border-red-500' : 'border-slate-300' }}">
+            @error('password')
+                <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+            @enderror
+        </div>
+
+        <input
+            type="password" name="password_confirmation" placeholder="Nhập lại mật khẩu"
+            class="w-full rounded-xl border border-slate-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#A8BCA1]">
+        <button
+            class="w-full rounded-xl bg-[#6B8F71] py-3 font-semibold text-white hover:bg-[#557A5E] transition">
+            Đăng ký
+        </button>
+
+    </form>
+
+    <p class="text-center text-sm text-slate-500 mt-6">
+        Đã có tài khoản?
+        <a href="/login" class="font-semibold text-[#4A6B53] hover:underline">
+            Đăng nhập
+        </a>
+    </p>
+
 </div>
 
 </body>

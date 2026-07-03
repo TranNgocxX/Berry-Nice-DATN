@@ -17,29 +17,41 @@
     </div>
 
     {{-- Tìm kiếm --}}
-    <div class="mb-6 flex items-center justify-between gap-4">
-        
-        <form action="{{ route('admin.services.index') }}" method="GET" class="relative w-full max-w-md">
-            {{-- icon --}}
-            <div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
-                <i class="fas fa-search text-slate-400 text-sm"></i>
+    <div class="mb-6">
+        <form action="{{ route('admin.services.index') }}" method="GET" class="flex flex-col sm:flex-row items-center gap-3 w-full">
+            
+            {{-- Nhập từ khóa --}}
+            <div class="relative w-full sm:max-w-md">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none text-slate-400">
+                    <i class="fas fa-search text-sm"></i>
+                </span>
+                <input type="text" name="keyword" value="{{ request('keyword') }}" placeholder="Tìm kiếm dịch vụ..."
+                    class="w-full pl-11 pr-4 py-3 border border-slate-200 rounded-2xl bg-white text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent transition">
             </div>
 
-            <input
-                type="text" name="keyword" value="{{ request('keyword') }}" placeholder="Tìm kiếm dịch vụ..."
-                class="w-full pl-11 pr-24 py-3 border border-slate-200 rounded-2xl bg-white text-sm text-slate-700 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent transition"
-            >
+            {{-- Chọn Danh mục --}}
+            <div class="w-full sm:max-w-xs relative">
+                <select name="category_id" onchange="this.form.submit()"
+                    class="w-full pl-4 pr-10 py-3 border border-slate-200 rounded-2xl bg-white text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent transition cursor-pointer appearance-none">
+                    <option value="">— Tất cả danh mục —</option>
+                    @foreach($categories as $cat)
+                        <option value="{{ $cat->id }}" {{ request('category_id') == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
+                    @endforeach
+                </select>
+                <span class="absolute inset-y-0 right-4 flex items-center pointer-events-none text-slate-400 text-xs">
+                    <i class="fas fa-chevron-down"></i>
+                </span>
+            </div>
 
-            {{-- Reset button --}}
-            @if(request('keyword'))
-                <a href="{{ route('admin.services.index') }}"
-                class="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-slate-400 hover:text-red-500 transition">
-                    Xóa
+            {{-- Nút Reset --}}
+            @if(request('keyword') || request('category_id'))
+                <a href="{{ route('admin.services.index') }}" 
+                class="w-full sm:w-auto text-center bg-slate-100 hover:bg-red-50 hover:text-red-600 text-slate-500 text-sm font-medium px-5 py-3 rounded-2xl transition whitespace-nowrap">
+                    Xóa bộ lọc
                 </a>
             @endif
 
         </form>
-
     </div>
 
     <div class="bg-white rounded-3xl shadow-sm overflow-hidden">
@@ -75,8 +87,14 @@
                     </td>
                     <td class="px-6 py-5">
                         <div class="flex items-center justify-center gap-3">
+                            <a href="{{ route('admin.services.show', $service) }}" 
+                            class="flex items-center justify-center w-9 h-9 bg-indigo-100 hover:bg-indigo-200 text-indigo-600 rounded-2xl transition"
+                            title="Xem chi tiết">
+                                <i class="fas fa-eye"></i>
+                            </a>
+
                             <a href="{{ route('admin.services.edit', $service) }}" 
-                               class="flex items-center justify-center w-9 h-9 bg-amber-100 hover:bg-amber-200 text-amber-600 rounded-2xl transition">
+                            class="flex items-center justify-center w-9 h-9 bg-amber-100 hover:bg-amber-200 text-amber-600 rounded-2xl transition">
                                 <i class="fas fa-edit"></i>
                             </a>
                             <form action="{{ route('admin.services.destroy', $service) }}" method="POST" class="inline">
